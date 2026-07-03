@@ -263,6 +263,10 @@ input[type=color]{width:34px;height:26px;border:1px solid var(--line);border-rad
           <input type="range" id="sizeAmt" min="0" max="3" step="0.1" value="1">
         </div>
         <div class="ctl">
+          <label>Handle dot size<span class="val" id="v_hsize">1.0</span></label>
+          <input type="range" id="hsize" min="0.2" max="4" step="0.1" value="1">
+        </div>
+        <div class="ctl">
           <label>Frame line width<span class="val" id="v_mwidth">1.5</span></label>
           <input type="range" id="mwidth" min="0.5" max="10" step="0.5" value="1.5">
         </div>
@@ -428,7 +432,7 @@ const P = {
   detMode:'bright', thr:128, res:160, minA:4, maxA:1200, maxB:40, smooth:0.45,
   keyColor:[255,0,0], tol:80, showMask:false,
   marker:'rect', msize:26, sizeMode:'area', sizeAmt:1, mwidth:1.5,
-  mcolor:'#5ee0a0', useBlobColor:false, rot:0,
+  mcolor:'#5ee0a0', useBlobColor:false, rot:0, hsize:1,
   connOn:true, cnum:3, cmin:0, cmax:280, cstyle:'straight', curve:0.25,
   cwidth:1, cgap:10, cfade:0.5, ccolor:'#5ee0a0', cdash:false,
   lblOn:true, lblMode:'coords', lblCustom:'', lsize:10, loff:8, lcolor:'#ffffff', lplate:false, lblPos:'corner',
@@ -436,7 +440,7 @@ const P = {
   fxIn:0, fxOut:0, hideVid:false, fadeIn:0, fadeOut:0
 };
 
-const MARKERS = ['rect','circle','x-rect','cross','dot','l-frame','scope','grid','handles-sq','handles-ci','diamond','triangle','brackets','ring'];
+const MARKERS = ['rect','circle','x-rect','cross','dot','dot-sq','l-frame','scope','grid','handles-sq','handles-ci','diamond','triangle','brackets','ring'];
 
 let blobs = [], nextId = 0, prevFrameData = null, maxSpeedSeen = 4;
 let history = new Map(); // id -> [{x,y}...]
@@ -453,7 +457,7 @@ bindRange('minA','minA','v_minA'); bindRange('maxA','maxA','v_maxA');
 bindRange('maxB','maxB','v_maxB'); bindRange('smooth','smooth','v_smooth');
 bindRange('tol','tol','v_tol');
 bindRange('msize','msize','v_msize'); bindRange('sizeAmt','sizeAmt','v_sizeAmt');
-bindRange('mwidth','mwidth','v_mwidth'); bindRange('rot','rot','v_rot');
+bindRange('mwidth','mwidth','v_mwidth'); bindRange('rot','rot','v_rot'); bindRange('hsize','hsize','v_hsize',v=>v.toFixed(1));
 bindRange('cnum','cnum','v_cnum'); bindRange('cmin','cmin','v_cmin');
 bindRange('cmax','cmax','v_cmax'); bindRange('curve','curve','v_curve');
 bindRange('cwidth','cwidth','v_cwidth'); bindRange('cgap','cgap','v_cgap');
@@ -692,6 +696,7 @@ function drawMarker(b){
     case 'cross':
       ctx.beginPath(); ctx.moveTo(-h,0); ctx.lineTo(h,0); ctx.moveTo(0,-h); ctx.lineTo(0,h); ctx.stroke(); break;
     case 'dot': ctx.beginPath(); ctx.arc(0,0,Math.max(1.5,s*0.12),0,Math.PI*2); ctx.fill(); break;
+    case 'dot-sq': { const r=Math.max(1.5,s*0.12); ctx.fillRect(-r,-r,r*2,r*2); break; }
     case 'l-frame': {
       const c=s*0.3;
       ctx.beginPath();
@@ -718,7 +723,7 @@ function drawMarker(b){
     }
     case 'handles-sq': case 'handles-ci': {
       ctx.strokeRect(-h,-h,s,s);
-      const r=Math.max(2,s*0.09+lw), sq=P.marker==='handles-sq';
+      const r=Math.max(1,(s*0.09+lw)*P.hsize), sq=P.marker==='handles-sq';
       for(const [cx,cy] of [[-h,-h],[h,-h],[h,h],[-h,h]]){
         ctx.beginPath();
         if(sq){ ctx.rect(cx-r,cy-r,r*2,r*2); } else { ctx.arc(cx,cy,r,0,Math.PI*2); }
