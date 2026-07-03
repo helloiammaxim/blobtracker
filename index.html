@@ -523,6 +523,9 @@ function loadFile(file){
     $('transport').style.display='flex';
     $('exportBtn').disabled=false;
     P.fxIn=0; P.fxOut=video.duration;
+    // trail slider can now cover the whole clip (~60 rendered frames per second)
+    const maxTrail=Math.max(90,Math.ceil(video.duration*60));
+    $('tlen').max=maxTrail;
     loaded=true; blobs=[]; history.clear(); prevFrameData=null;
     video.loop = $('loopChk').checked;
     video.play();
