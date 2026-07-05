@@ -42,4 +42,4 @@ Vanilla JS, Canvas 2D, MediaRecorder, JSZip, ffmpeg.wasm. No build step, no depe
 
 ## License
 
-MIT
+Apache-2.0
