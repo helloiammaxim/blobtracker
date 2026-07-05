@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
+  color-scheme:dark;
   --bg:#0a0b0e;
   --bg-glow1:rgba(120,90,255,.07);
   --bg-glow2:rgba(255,150,60,.05);
@@ -27,6 +28,7 @@
   --radius-s:9px;
 }
 [data-theme="light"]{
+  color-scheme:light;
   --bg:#f4f4f6;
   --bg-glow1:rgba(120,90,255,.06);
   --bg-glow2:rgba(255,150,60,.07);
@@ -150,6 +152,7 @@ select,input[type=text]{
   transition:border-color .15s;
 }
 select:focus,input[type=text]:focus{outline:none;border-color:var(--accent)}
+select option{background:var(--bg);color:var(--txt)}
 input[type=color]{width:36px;height:28px;border:1px solid var(--line-soft);border-radius:8px;background:var(--panel2);padding:2px;cursor:pointer}
 .row{display:flex;gap:10px;align-items:center}
 .row .ctl{flex:1}
@@ -316,7 +319,7 @@ input[type=color]{width:36px;height:28px;border:1px solid var(--line-soft);borde
         </div>
         <div class="ctl">
           <label>Base size<span class="val" id="v_msize">26</span></label>
-          <input type="range" id="msize" min="4" max="140" value="26">
+          <input type="range" id="msize" min="4" max="400" value="26">
         </div>
         <div class="ctl">
           <label>Size mode<span class="val"></span></label>
