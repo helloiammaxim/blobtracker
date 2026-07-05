@@ -1,28 +1,26 @@
 # BLOBTRACKER
 
-Browser-based blob tracking effects for video. Load footage, overlay animated tracking markers, export — all client-side, no server, single HTML file.
+Browser-based blob tracking effects for video. Load footage, overlay animated tracking markers, export — all client-side, single HTML file, no server or install.
 
-![dark & light themes · Space Grotesk HUD aesthetic](docs/preview.png)
+## How to use
 
-## Features
+1. **Open** `blobtracker.html` in Chrome or Edge.
+2. **Load a video** — drag & drop onto the canvas or click "Load video".
+3. **Tune detection (01)** — pick what counts as a blob: bright areas, dark areas, a keyed color, or motion. Adjust threshold until the right things are tracked (enable "show detection mask" to see exactly what's detected). Use min/max area to filter noise, smoothing to stabilize jitter.
+4. **Style markers (02)** — choose a tracker shape (rect, circle, cross, l-frame, scope, corner handles, etc.), base size, and a size mode: fixed, or driven by blob lightness, area, speed, or hue.
+5. **Connections (03)** — lines between nearby blobs: how many per blob, min/max distance, straight/curved/elbow, width, gaps, fade.
+6. **Labels (04)** — ID, coordinates, area, speed, or custom text in Space Grotesk. Position at frame corner, center, above, or below.
+7. **Trails (05)** — optional motion paths, up to the full clip length; colored by a fixed color, the blob, or the background.
+8. **Set the effect range** — drag the two handles on the timeline to choose where the effect is active; FADE IN / FADE OUT gradually ramp the blob count at the edges.
+9. **Export** — pick a mode (full composite, blobs on black, blobs transparent) and format, then hit "Export video". A download link appears when done.
 
-- **Detection** — by brightness, darkness, color key, or motion (frame diff). Threshold, sample resolution, min/max blob area, blob count (up to 5000), position smoothing, debug mask overlay. Blobs are tracked across frames with stable IDs and velocity.
-- **Markers** — 15 tracker types: rect, circle, x-rect, cross, dot (round/square), l-frame, scope, grid, corner handles (square/circle), diamond, triangle, brackets, ring. Size modes: fixed, lightness, area, speed, hue. Line width, handle dot size, fixed or blob-sampled color, rotation by motion.
-- **Connections** — per-blob count, min/max distance, straight / curved / elbow lines, width, endpoint gaps, distance-based opacity fade, dashed.
-- **Labels** — Space Grotesk. ID, coordinates, area, speed, or custom text. Corner / center / above / below positioning, size, offset, background plate.
-- **Trails** — up to full clip length. Color: fixed, from blob, or sampled from background.
-- **Timeline** — draggable FX in/out range, gradual blob count fade in/out.
-- **Export**
-  - WebM (native, supports alpha transparency)
-  - MP4 / MOV via native MediaRecorder or in-browser ffmpeg.wasm
-  - PNG sequence (ZIP) with true alpha — for After Effects / Blender compositing
-  - Modes: full composite, blobs on black, blobs on transparent
+## Export formats
 
-## Usage
+- **WebM** — native, fastest, supports alpha transparency
+- **MP4 / MOV** — recorded natively where the browser supports it, otherwise converted in-browser via ffmpeg.wasm (~25 MB one-time download); opaque only
+- **PNG sequence (ZIP)** — true alpha, frame-exact, exports only the FX range; best for After Effects / Blender
 
-Open `blobtracker.html` in Chrome/Edge. That's it.
-
-For MP4/MOV conversion (ffmpeg.wasm workers), serve locally instead of `file://`:
+WebM/MP4 export records in real time — keep the tab focused. For MP4/MOV conversion, run from a local server instead of `file://`:
 
 ```
 python -m http.server
@@ -31,15 +29,12 @@ python -m http.server
 
 ## Notes
 
-- Alpha transparency: WebM (Chrome, Blender) or PNG sequence (everything). H.264 MP4/MOV is opaque.
-- WebM/MP4 export records in real time — keep the tab focused. PNG sequence is seek-driven and drop-proof.
-- ffmpeg.wasm (~25 MB) loads lazily from CDN on first MP4/MOV convert.
-- Mobile-optimized: touch targets, stacked layout, reduced default detection resolution.
-
-## Stack
-
-Vanilla JS, Canvas 2D, MediaRecorder, JSZip, ffmpeg.wasm. No build step, no dependencies to install.
+- Dark and light themes (◐ button), follows system preference by default
+- Works on mobile — touch-optimized controls, stacked layout
+- Stack: vanilla JS, Canvas 2D, MediaRecorder, JSZip, ffmpeg.wasm — no build step
 
 ## License
 
-Apache-2.0
+[PolyForm Noncommercial 1.0.0](LICENSE.md) — free to use, modify, and share for any noncommercial purpose (personal projects, study, portfolio work, education, nonprofits).
+
+**Commercial use requires a separate license.** If you want to use BLOBTRACKER in paid work, a product, or a service, get in touch: [@helloiammaxim](https://instagram.com/helloiammaxim)
