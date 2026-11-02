@@ -35,12 +35,10 @@ python -m http.server
 
 ## License
 
-**In simple words:**
+Free to use for personal and commercial work under the [PolyForm Shield License 1.0.0](LICENSE.md).
 
-- ✅ Use it for anything — personal projects, client work, commercial videos, paid productions
-- ✅ Modify it, remix it, share it
-- ❌ Don't sell or offer BLOBTRACKER itself (or a rebranded copy) as your own tool, product, or service
+- ✅ Use the tool for free, for personal and client projects
+- ✅ Everything you make with it (videos and images) is yours, including for commercial use
+- ❌ Don't sell the tool, put it behind a paywall, host it as a paid service, or build it into a product that competes with it
 
-Basically: make cool stuff with it, earn money with what you make — just don't sell the tool.
-
-Full terms: [PolyForm Perimeter 1.0.1](LICENSE.md). Want to build a product on it? Get in touch: [@helloiammaxim](https://instagram.com/helloiammaxim)
+© 2026 Max Soldatkin
